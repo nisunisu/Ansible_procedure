@@ -1,29 +1,27 @@
 ---
-- hosts:  targets
+- hosts: webservers
   become: yes
   tasks:
-    - name: output msgs
-      debug:
-        msg: "System {{ inventory_hostname }} has uuid {{ ansible_product_uuid }}"
-    - name: double quote, double kakko
-      debug:
-        msg: "{{ ansible_nodename }}" # varだと半角空白が無いとエラーになる
-    - name: no quote, no kakko
-      debug:
-        msg: ansible_os_family # これも変数扱いになる
-    
-    # SMARTS用セットアップ
-    - name: Ensure group "mpl" exists
+    - name: groupadd "sroot"
       group:
-        name: mpl
+        name: sroot
         state: present
-    - name: Add the user 'sroot' with a specific uid and a primary group of 'admin'
+    - name: useradd "sroot"
       user:
         name: sroot
-        group: mpl # primary group
-    - name: Create a 2048-bit SSH key for user sroot in ~sroot/.ssh/id_rsa
-      user:
-        name: sroot
-        generate_ssh_key: yes
-        ssh_key_bits: 2048
-        ssh_key_file: .ssh/id_rsa
+        group: mpl
+    - name: yum install nginx
+      yum:
+        name: nginx
+        state: present
+    - name : Copy nginx.conf
+      copy:
+        src: /etc/ansible/roles/web/files/nginx.conf
+        dest: /etc/nginx/nginx.conf
+        owner: root
+        group: root
+        mode: '0644'
+    - name : systemctl start nginx
+      service:
+        name: nginx
+        state: started
