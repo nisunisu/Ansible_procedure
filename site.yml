@@ -9,7 +9,7 @@
     - name: useradd "sroot"
       user:
         name: sroot
-        group: mpl
+        group: sroot 
     - name: yum install nginx
       yum:
         name: nginx
