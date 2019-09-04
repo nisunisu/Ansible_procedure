@@ -15,8 +15,8 @@
     - name: useradd "sroot"
       user:
         name: sroot
-        group: mpl
-    - name: install pkgs
+        group: sroot 
+    - name: yum install nginx
       yum:
         name: "{{ item }}"
         state: present
