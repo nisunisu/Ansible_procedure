@@ -1,6 +1,12 @@
 ---
 - hosts: webservers
   become: yes
+  vars:
+    msg: "Hello, world"
+    ip_addr: 192.168.0.1
+    pkgs:
+      - nginx
+      - git
   tasks:
     - name: groupadd "sroot"
       group:
@@ -10,10 +16,11 @@
       user:
         name: sroot
         group: mpl
-    - name: yum install nginx
+    - name: install pkgs
       yum:
-        name: nginx
+        name: "{{ item }}"
         state: present
+      with_items: "{{ pkgs }}"
     - name : Copy nginx.conf
       copy:
         src: /etc/ansible/roles/web/files/nginx.conf
@@ -25,3 +32,8 @@
       service:
         name: nginx
         state: started
+    - name: set Timezone as Asia/Tokyo
+      timezone:
+        name: Asia/Tokyo
+    - name: set locale as LANG=ja_JP.utf8
+      command: localectl set-locale LANG=ja_JP.utf8
