@@ -15,3 +15,15 @@
       name: Asia/Tokyo
   - name: LOCALE SETTING
     command: localectl set-locale LANG=ja_JP.utf8
+
+  - name: NEW USELESS FILE
+    file:
+      path: /tmp/useless.file
+      owner: testuser1
+      group: testgroup1
+      mode: '744'
+      state: touch
+  - name: REMOVE USELESS FILE
+    file:
+      path: /tmp/useless.file
+      state: absent
