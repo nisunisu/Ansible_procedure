@@ -10,6 +10,7 @@
     user:
       name: testuser1
       group: testgroup1
+
   - name: TIMEZONE SETTING
     timezone:
       name: Asia/Tokyo
@@ -27,3 +28,8 @@
     file:
       path: /tmp/useless.file
       state: absent
+
+  - name: COPY FILE
+    copy:
+      src: ~/ansible/roles/common/files/copy_src.file
+      dest: /tmp/copy_src.file
