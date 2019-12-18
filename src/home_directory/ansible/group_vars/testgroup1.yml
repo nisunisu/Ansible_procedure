@@ -1,0 +1,7 @@
+# hostsにtestgroup1グループが定義されている時、以下いずれかの構造とする必要がある
+# - group_vars/testgroup1.yml
+# - group_vars/testgroup1/hoge.yml
+---
+yum_install:
+- name: httpd
+- name: python3

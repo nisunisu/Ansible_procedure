@@ -34,13 +34,17 @@
       src: ~/ansible/roles/common/files/copy_src.file
       dest: /tmp/copy_src.file
       mode: preserve
-      
+
   - name: SET HOSTNAME
     hostname:
       name: testhost1
-      
+
   - name: SET IPTABLES (BLOCK SPECICIC IP)
     iptables:
       chain: INPUT
       source: 8.8.8.8
       jump: DROP
+
+  - name: DEBUG VAR
+    debug:
+      msg: "{{ yum_install }}"
