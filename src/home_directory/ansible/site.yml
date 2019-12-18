@@ -48,3 +48,8 @@
   - name: DEBUG VAR
     debug:
       msg: "{{ yum_install }}"
+
+  - name: INSTALL PACKAGES
+    yum:
+      name: httpd
+      state: latest
