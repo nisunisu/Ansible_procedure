@@ -3,5 +3,6 @@
 # - group_vars/testgroup1/hoge.yml
 ---
 yum_install:
-- { name: httpd, state: latest }
-- { name: git,   state: latest }
+- { state: latest,  name: httpd}
+- { state: latest,  name: git}
+- { state: present, name: postgresql-9.2.24-1.el7_5}
