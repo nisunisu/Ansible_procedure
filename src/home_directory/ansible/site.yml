@@ -54,3 +54,15 @@
       name:  "{{ item.name }}"
       state: "{{ item.state }}"
     with_items: "{{ yum_install }}"
+
+  - name: CHECK SELINUX STATUS
+    shell: getenforce
+    register: selinux_state
+  - name: TURN OFF SELINUX (WHEN SELINUX NOT DISABLED)
+    shell: setenforce 0
+    when: selinux_state.stdout == "Enforcing"
+  - name: Disable SELinux on boot
+    replace:
+      path: /etc/selinux/config
+      regexp: '^SELINUX=.*'
+      replace: 'SELINUX=disabled'
