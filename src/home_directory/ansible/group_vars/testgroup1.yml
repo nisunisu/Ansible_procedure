@@ -3,5 +3,5 @@
 # - group_vars/testgroup1/hoge.yml
 ---
 yum_install:
-- name: httpd
-- name: python3
+- { name: httpd, state: latest }
+- { name: git,   state: latest }
