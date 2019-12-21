@@ -2,6 +2,10 @@
 # - group_vars/testgroup1.yml
 # - group_vars/testgroup1/hoge.yml
 ---
+my_groups:
+- { state: present, name: testgroup1}
+- { state: present, name: test_sub_group1}
+
 yum_install:
 - { state: latest,  name: httpd}
 - { state: latest,  name: git}
