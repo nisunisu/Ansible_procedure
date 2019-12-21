@@ -7,6 +7,6 @@ my_groups:
 - { name: test_sub_group1, state: present, gid: 1004}
 
 yum_install:
-- { state: latest,  name: httpd}
-- { state: latest,  name: git}
-- { state: present, name: postgresql-9.2.24-1.el7_5}
+- { name: httpd,                     state: latest}
+- { name: git,                       state: latest}
+- { name: postgresql-9.2.24-1.el7_5, state: present}
