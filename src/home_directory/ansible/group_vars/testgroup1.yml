@@ -6,6 +6,9 @@ my_groups:
 - { name: testgroup1,      state: present, gid: 1003}
 - { name: test_sub_group1, state: present, gid: 1004}
 
+copy_files:
+- { src_local: ~/ansible/roles/common/files/copy_src.file,             dst_remote: /tmp/copy_src.file}
+
 yum_install:
 - { name: httpd,                     state: latest}
 - { name: git,                       state: latest}
