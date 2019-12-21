@@ -12,6 +12,7 @@
       name: testuser1
       group: testgroup1
       groups: test_sub_group1
+      uid: 1002
       shell: /bin/bash
       create_home: yes
 
