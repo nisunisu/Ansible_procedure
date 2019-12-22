@@ -1,82 +1,79 @@
 ---
-- hosts: testgroup1
-  become: yes
-  tasks:
-  - name: CREATE A NEW GROUP
-    group:
-      name: "{{ item.name }}"
-      state: "{{ item.state }}"
-      gid: "{{ item.gid }}"
-    with_items: "{{ my_groups }}"
-  - name: CREATE A NEW USER
-    user:
-      name: testuser1
-      group: testgroup1
-      groups: test_sub_group1
-      uid: 1002
-      shell: /bin/bash
-      create_home: yes
+- name: CREATE A NEW GROUP
+  group:
+    name: "{{ item.name }}"
+    state: "{{ item.state }}"
+    gid: "{{ item.gid }}"
+  with_items: "{{ my_groups }}"
+- name: CREATE A NEW USER
+  user:
+    name: testuser1
+    group: testgroup1
+    groups: test_sub_group1
+    uid: 1002
+    shell: /bin/bash
+    create_home: yes
 
-  - name: TIMEZONE SETTING
-    timezone:
-      name: Asia/Tokyo
-  - name: LOCALE SETTING
-    command: localectl set-locale LANG=ja_JP.utf8
+- name: TIMEZONE SETTING
+  timezone:
+    name: Asia/Tokyo
+- name: LOCALE SETTING
+  command: localectl set-locale LANG=ja_JP.utf8
 
-  - name: NEW USELESS FILE
-    file:
-      path: /tmp/useless.file
-      owner: testuser1
-      group: testgroup1
-      mode: '744'
-      state: touch
-  - name: REMOVE USELESS FILE
-    file:
-      path: /tmp/useless.file
-      state: absent
+- name: NEW USELESS FILE
+  file:
+    path: /tmp/useless.file
+    owner: testuser1
+    group: testgroup1
+    mode: '744'
+    state: touch
+- name: REMOVE USELESS FILE
+  file:
+    path: /tmp/useless.file
+    state: absent
 
-  - name: COPY FILE
-    copy:
-      src:  "{{ item.src_local }}"
-      dest: "{{ item.dst_remote }}"
-      mode: preserve
-    with_items: "{{ copy_files }}"
+- name: COPY FILE
+  copy:
+    src:  "{{ item.src_local }}"
+    dest: "{{ item.dst_remote }}"
+    mode: preserve
+  with_items: "{{ copy_files }}"
 
-  - name: SET HOSTNAME
-    hostname:
-      name: testhost1
+- name: SET HOSTNAME
+  hostname:
+    name: testhost1
 
-  - name: SET IPTABLES (BLOCK SPECICIC IP)
-    iptables:
-      chain: INPUT
-      source: 8.8.8.8
-      jump: DROP
+- name: SET IPTABLES (BLOCK SPECICIC IP)
+  iptables:
+    chain: INPUT
+    source: 8.8.8.8
+    jump: DROP
 
-  - name: DEBUG VAR
-    debug:
-      msg: "{{ yum_install }}"
+- name: DEBUG VAR
+  debug:
+    msg: "{{ yum_install }}"
 
-  - name: INSTALL PACKAGES
-    yum:
-      name:  "{{ item.name }}"
-      state: "{{ item.state }}"
-    with_items: "{{ yum_install }}"
+- name: INSTALL PACKAGES
+  yum:
+    name:  "{{ item.name }}"
+    state: "{{ item.state }}"
+  with_items: "{{ yum_install }}"
 
-  - name: CHECK SELINUX STATUS
-    shell: getenforce
-    register: selinux_state
-  - name: TURN OFF SELINUX (WHEN SELINUX NOT DISABLED)
-    shell: setenforce 0
-    when: selinux_state.stdout == "Enforcing"
-  - name: Disable SELinux on boot
-    replace:
-      path: /etc/selinux/config
-      regexp: '^SELINUX=.*'
-      replace: 'SELINUX=disabled'
+- name: CHECK SELINUX STATUS
+  shell: getenforce
+  register: selinux_state
+- name: TURN OFF SELINUX (WHEN SELINUX NOT DISABLED)
+  shell: setenforce 0
+  when: selinux_state.stdout == "Enforcing"
+- name: Disable SELinux on boot
+  replace:
+    path: /etc/selinux/config
+    regexp: '^SELINUX=.*'
+    replace: 'SELINUX=disabled'
 
-  - name: SET SUDOERS
-    lineinfile:
-      path: /etc/sudoers
-      state: present
-      regexp: '^root +ALL=\(ALL\) +ALL$'
-      line: 'root ALL=(ALL) ALL'
+- name: SET SUDOERS
+  lineinfile:
+    path: /etc/sudoers
+    state: present
+    regexp: '^root +ALL=\(ALL\) +ALL$'
+    line: 'root ALL=(ALL) ALL'
