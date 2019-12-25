@@ -6,6 +6,9 @@ my_groups:
 - { name: testgroup1,      state: present, gid: 1003}
 - { name: test_sub_group1, state: present, gid: 1004}
 
+my_users:
+- { user: testuser1, primary_group: testgroup1, secondary_group: test_sub_group1, uid: 1002, login_shell: /bin/bash, create_home: yes, password: mypassword}
+
 copy_files:
 - { src_local: ~/ansible/roles/common/files/copy_src.file, dst_remote: /tmp/copy_src.file}
 - { src_local: ~/ansible/roles/common/files/etc/logrotate.conf, dst_remote: /etc/logrotate.conf}

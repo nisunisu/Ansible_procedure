@@ -7,12 +7,14 @@
   with_items: "{{ my_groups }}"
 - name: CREATE A NEW USER
   user:
-    name: testuser1
-    group: testgroup1
-    groups: test_sub_group1
-    uid: 1002
-    shell: /bin/bash
-    create_home: yes
+    name: "{{ item.user }}"
+    group: "{{ item.primary_group }}"
+    groups: "{{ item.secondary_group }}"
+    uid: "{{ item.uid }}"
+    shell: "{{ item.login_shell }}"
+    create_home: "{{ item.create_home }}"
+    password: "{{ item.password | password_hash('sha512','mysalt') }}"
+  with_items: "{{ my_users }}"
 
 - name: TIMEZONE SETTING
   timezone:
