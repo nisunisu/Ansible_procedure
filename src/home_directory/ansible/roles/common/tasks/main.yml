@@ -61,7 +61,7 @@
 - name: TURN OFF SELINUX (WHEN SELINUX NOT DISABLED)
   shell: setenforce 0
   when: selinux_state.stdout == "Enforcing"
-- name: Disable SELinux on boot
+- name: DISABLE SELINUX ON BOOT
   replace:
     path: /etc/selinux/config
     regexp: '^SELINUX=.*'
