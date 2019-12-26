@@ -13,8 +13,3 @@ copy_files:
 - { src_local: ~/ansible/roles/common/files/copy_src.file, dst_remote: /tmp/copy_src.file}
 - { src_local: ~/ansible/roles/common/files/etc/logrotate.conf, dst_remote: /etc/logrotate.conf}
 - { src_local: ~/ansible/roles/common/files/etc/logrotate.d/httpd, dst_remote: /etc/logrotate.d/httpd}
-
-yum_install:
-- { name: httpd,                     state: latest}
-- { name: git,                       state: latest}
-- { name: postgresql-9.2.24-1.el7_5, state: present}

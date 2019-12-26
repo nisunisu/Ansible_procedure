@@ -1,0 +1,4 @@
+yum_install:
+  - { name: httpd,                     state: latest}
+  - { name: git,                       state: latest}
+  - { name: postgresql-9.2.24-1.el7_5, state: present}
