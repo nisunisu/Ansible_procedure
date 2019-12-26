@@ -4,7 +4,7 @@
     name: "{{ item.name }}"
     state: "{{ item.state }}"
     gid: "{{ item.gid }}"
-  with_items: "{{ my_groups }}"
+  loop: "{{ my_groups }}"
 - name: CREATE A NEW USER
   user:
     name: "{{ item.user }}"
@@ -14,7 +14,7 @@
     shell: "{{ item.login_shell }}"
     create_home: "{{ item.create_home }}"
     password: "{{ item.password | password_hash('sha512','mysalt') }}"
-  with_items: "{{ my_users }}"
+  loop: "{{ my_users }}"
 
 - name: TIMEZONE SETTING
   timezone:
@@ -39,7 +39,7 @@
     src:  "{{ item.src_local }}"
     dest: "{{ item.dst_remote }}"
     mode: preserve
-  with_items: "{{ copy_files }}"
+  loop: "{{ copy_files }}"
 
 - name: SET HOSTNAME
   hostname:
@@ -54,12 +54,6 @@
 - name: DEBUG VAR
   debug:
     msg: "{{ yum_install }}"
-
-- name: INSTALL PACKAGES
-  yum:
-    name:  "{{ item.name }}"
-    state: "{{ item.state }}"
-  with_items: "{{ yum_install }}"
 
 - name: CHECK SELINUX STATUS
   shell: getenforce
