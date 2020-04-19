@@ -1,3 +1,0 @@
-yum_install:
-- name: httpd
-  state: latest

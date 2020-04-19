@@ -1,6 +1,0 @@
----
-- name: INSTALL PACKAGES
-  yum:
-    name:  "{{ item.name }}"
-    state: "{{ item.state }}"
-  loop: "{{ yum_install }}"

@@ -1,0 +1,7 @@
+yum_install:
+- name: httpd
+  state: latest
+
+copy_files:
+- { src_local: ~/ansible/roles/httpd/etc/httpd/conf/httpd.conf,     dst_remote: /etc/httpd/conf/httpd.conf}
+- { src_local: ~/ansible/roles/httpd/etc/httpd/conf.d/welcome.conf, dst_remote: /etc/httpd/conf.d/welcome.conf}

@@ -1,0 +1,13 @@
+---
+- name: INSTALL PACKAGES
+  yum:
+    name:  "{{ item.name }}"
+    state: "{{ item.state }}"
+  loop: "{{ yum_install }}"
+
+- name: COPY FILES
+  copy:
+    src:  "{{ item.src_local }}"
+    dest: "{{ item.dst_remote }}"
+    mode: preserve
+  loop: "{{ copy_files }}"
