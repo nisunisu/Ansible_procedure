@@ -1,6 +1,0 @@
----
-- hosts: testgroup1
-  become: yes
-  roles:
-  - common
-  - httpd
